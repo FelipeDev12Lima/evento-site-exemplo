@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omni 2026 — Resultados & Celebração</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0A1628;
+      --navy2:  #0F1F3D;
+      --gold:   #C9A84C;
+      --gold2:  #E8C86A;
+      --white:  #FFFFFF;
+      --off:    #F4F6FA;
+      --gray:   #8A93A6;
+      --light:  #D4DCF0;
+      --night:  #060D1A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--off);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 60%, #1a2f5a 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* subtle grid lines */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 6px 20px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 7vw, 88px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.05;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-sub {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--light);
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-meta {
+      margin-top: 48px;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .meta-item {
+      text-align: center;
+    }
+
+    .meta-item .label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .meta-item .value {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--white);
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 50px;
+      background: rgba(201,168,76,0.35);
+      align-self: center;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--gray);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      z-index: 1;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .scroll-hint svg { opacity: 0.5; }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 48px;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold) 0%, var(--light) 100%);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 0;
+      padding: 28px 0 28px 36px;
+      border-bottom: 1px solid rgba(10,22,40,0.07);
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      transition: background 0.2s;
+    }
+
+    .tl-item:last-child { border-bottom: none; }
+
+    .tl-item:hover { background: rgba(201,168,76,0.03); border-radius: 4px; }
+
+    .tl-dot {
+      position: absolute;
+      left: -7px;
+      top: 36px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: var(--off);
+      flex-shrink: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .tl-item:hover .tl-dot {
+      background: var(--gold);
+      transform: scale(1.2);
+    }
+
+    .tl-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .tl-content { flex: 1; }
+
+    .tl-time {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .tl-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .tl-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ── NIGHT BREAK ── */
+    .night-break {
+      background: var(--night);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .night-break .line { flex: 1; height: 1px; background: rgba(201,168,76,0.3); }
+
+    .night-break .text {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    /* night items get dark styling */
+    .night-section {
+      background: var(--night);
+    }
+
+    .night-section .section-title { color: var(--white); }
+    .night-section .timeline::before { background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.2)); }
+    .night-section .tl-item { border-bottom-color: rgba(255,255,255,0.06); }
+    .night-section .tl-item:hover { background: rgba(201,168,76,0.05); }
+    .night-section .tl-dot { background: var(--night); }
+    .night-section .tl-item:hover .tl-dot { background: var(--gold); }
+    .night-section .tl-title { color: var(--white); }
+    .night-section .tl-desc { color: rgba(255,255,255,0.45); }
+
+    /* ── VENUE ── */
+    .venue-band {
+      background: var(--navy);
+      padding: 64px 24px;
+      text-align: center;
+    }
+
+    .venue-band .section-eyebrow { text-align: center; }
+
+    .venue-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 3.5vw, 36px);
+      font-weight: 700;
+      color: var(--white);
+      margin-top: 8px;
+    }
+
+    .venue-address {
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    /* ── QR ── */
+    .qr-section {
+      background: var(--off);
+      text-align: center;
+      padding: 80px 24px;
+    }
+
+    .qr-box {
+      display: inline-block;
+      background: var(--white);
+      padding: 28px;
+      border: 1px solid var(--light);
+      border-radius: 4px;
+      margin-top: 28px;
+      box-shadow: 0 4px 24px rgba(10,22,40,0.06);
+    }
+
+    #qrcode canvas, #qrcode img { border-radius: 2px; }
+
+    .qr-url {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--gray);
+      word-break: break-all;
+      max-width: 300px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.08em;
+    }
+
+    footer span { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      .hero-meta { gap: 20px; }
+      .hero-divider { display: none; }
+      .tl-item { flex-direction: column; gap: 8px; }
+    }
+
+    /* entry animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-badge">Evento Anual</div>
+  <h1>
+    Omni<br>
+    <span>Resultados 2026</span>
+  </h1>
+  <p class="hero-sub">Uma jornada de conquistas — da abertura ao brinde final</p>
+
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="label">Data</div>
+      <div class="value">12 de Dezembro, 2026</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="meta-item">
+      <div class="label">Início</div>
+      <div class="value">08h00</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="meta-item">
+      <div class="label">Local</div>
+      <div class="value">Grand Hyatt Campinas</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M8 2v12M3 9l5 5 5-5" stroke="#8A93A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Ver programação
+  </div>
+</section>
+
+<!-- ── PROGRAMAÇÃO — DIA ── -->
+<div class="section reveal">
+  <p class="section-eyebrow">Programação do Dia</p>
+  <h2 class="section-title">Manhã & Tarde</h2>
+
+  <div class="timeline">
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">☕</div>
+      <div class="tl-content">
+        <div class="tl-time">08h00 – 09h00</div>
+        <div class="tl-title">Café da Manhã de Boas-Vindas</div>
+        <div class="tl-desc">Credenciamento e café da manhã especial com o time. Momento de conexão e networking antes do início oficial.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">💻</div>
+      <div class="tl-content">
+        <div class="tl-time">09h00 – 10h00</div>
+        <div class="tl-title">Palestra de Tecnologia</div>
+        <div class="tl-desc">O futuro da automação inteligente: como IA e RPA estão transformando o setor financeiro e os resultados da Omni em 2026.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">☕</div>
+      <div class="tl-content">
+        <div class="tl-time">10h00 – 10h20</div>
+        <div class="tl-title">Coffee Break</div>
+        <div class="tl-desc">Pausa para networking e troca de experiências entre os participantes.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">🤝</div>
+      <div class="tl-content">
+        <div class="tl-time">10h20 – 11h20</div>
+        <div class="tl-title">Palestra de Recursos Humanos</div>
+        <div class="tl-desc">Cultura, talentos e engajamento: as pessoas por trás dos resultados. Reconhecimentos e destaques do ano de 2026.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">🔮</div>
+      <div class="tl-content">
+        <div class="tl-time">11h20 – 12h00</div>
+        <div class="tl-title">Painel: Estratégia & Inovação</div>
+        <div class="tl-desc">Debate entre líderes sobre os pilares estratégicos da Omni para o próximo ciclo e as apostas para 2027.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">🍽️</div>
+      <div class="tl-content">
+        <div class="tl-time">12h00 – 14h00</div>
+        <div class="tl-title">Almoço</div>
+        <div class="tl-desc">Almoço executivo com cardápio especial preparado pelo Grand Hyatt Campinas. Momento de descontração e integração.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">📊</div>
+      <div class="tl-content">
+        <div class="tl-time">14h00 – 15h00</div>
+        <div class="tl-title">Apresentação dos Números</div>
+        <div class="tl-desc">Resultados consolidados de 2026: carteira de crédito, inadimplência, crescimento e marcos alcançados pela Omni S.A.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">🏆</div>
+      <div class="tl-content">
+        <div class="tl-time">15h00 – 16h00</div>
+        <div class="tl-title">Premiação de Destaque por Área</div>
+        <div class="tl-desc">Reconhecimento das equipes e colaboradores que se destacaram em produtividade, inovação e resultados no ano.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">💡</div>
+      <div class="tl-content">
+        <div class="tl-time">16h00 – 17h00</div>
+        <div class="tl-title">Workshop: Casos de Sucesso</div>
+        <div class="tl-desc">Grupos temáticos apresentam cases internos de maior impacto: automações, projetos de crédito e iniciativas de ESG.</div>
+      </div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-icon">☕</div>
+      <div class="tl-content">
+        <div class="tl-time">17h00 – 17h30</div>
+        <div class="tl-title">Pausa & Livre</div>
+        <div class="tl-desc">Intervalo antes da programação noturna. Espaço para descanso e conversas informais.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── NIGHT BREAK ── -->
+<div class="night-break">
+  <div class="line"></div>
+  <div class="text">✦ Programação Noturna ✦</div>
+  <div class="line"></div>
+</div>
+
+<!-- ── PROGRAMAÇÃO — NOITE ── -->
+<div class="night-section">
+  <div class="section reveal">
+    <p class="section-eyebrow" style="color: var(--gold);">A Partir das 19h00</p>
+    <h2 class="section-title">Noite de Celebração</h2>
+
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-icon">🥂</div>
+        <div class="tl-content">
+          <div class="tl-time">19h00 – 20h00</div>
+          <div class="tl-title">Coquetel de Comemoração</div>
+          <div class="tl-desc">Recepção especial com drinks assinados, canapés e música ambiente. O brinde oficial ao ano que foi.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-icon">🎤</div>
+        <div class="tl-content">
+          <div class="tl-time">20h00 – 20h30</div>
+          <div class="tl-title">Discurso da Liderança</div>
+          <div class="tl-desc">Palavra da diretoria: agradecimentos, reflexões sobre a jornada de 2026 e visão para o futuro da Omni.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-icon">🥇</div>
+        <div class="tl-content">
+          <div class="tl-time">20h30 – 21h30</div>
+          <div class="tl-title">Cerimônia dos Campeões</div>
+          <div class="tl-desc">O momento mais aguardado da noite: reconhecimento dos MVPs do ano, melhores equipes e talentos que fizeram a diferença em 2026.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-icon">🍾</div>
+        <div class="tl-content">
+          <div class="tl-time">21h30 – 22h00</div>
+          <div class="tl-title">Brinde Final & Confraternização</div>
+          <div class="tl-desc">O brinde do ano: música ao vivo, jantar de encerramento e celebração livre com toda a equipe Omni.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── VENUE ── -->
+<div class="venue-band reveal">
+  <p class="section-eyebrow" style="text-align:center;">Local do Evento</p>
+  <div class="venue-name">Grand Hyatt Campinas</div>
+  <p class="venue-address">Av. Lix da Cunha, 2.611 – Cambuí, Campinas – SP</p>
+</div>
+
+<!-- ── QR CODE ── -->
+<div class="qr-section reveal">
+  <p class="section-eyebrow">Acesse pelo celular</p>
+  <h2 class="section-title" style="margin-bottom: 0;">QR Code do Evento</h2>
+  <div class="qr-box">
+    <div id="qrcode"></div>
+    <p class="qr-url" id="qr-url-label"></p>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p><span>Omni S.A.</span> Crédito, Financiamento e Investimento — Evento Anual 2026</p>
+  <p style="margin-top: 6px;">12 de Dezembro de 2026 · Grand Hyatt Campinas</p>
+</footer>
+
+<script>
+  // ── QR Code ──
+  const pageUrl = window.location.href;
+  document.getElementById('qr-url-label').textContent = pageUrl;
+
+  new QRCode(document.getElementById('qrcode'), {
+    text: pageUrl,
+    width: 200,
+    height: 200,
+    colorDark: '#0A1628',
+    colorLight: '#FFFFFF',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 6) * 60}ms`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
